@@ -6,7 +6,7 @@
 
 The **3D Asset Pack Preview Generator** is inspired by the workflow of creating well-organized and visually appealing asset packs for game development and 3D design. The goal is to make it easier for creators to present their work efficiently, with minimal manual effort.
 
-[Report an Issue](https://github.com/aitordsgn03/Asset-Pack-Preview-Generator/issues) · [Suggest an Idea](https://github.com/aitordsgn03/Asset-Pack-Preview-Generator/issues)
+[📖 Guide](https://github.com/aitordsgn03/Asset-Pack-Preview-Generator/blob/main/GUIDE.md) · [🐛 Report an Issue](https://github.com/aitordsgn03/Asset-Pack-Preview-Generator/issues) · [💡 Suggest an Idea](https://github.com/aitordsgn03/Asset-Pack-Preview-Generator/issues)
 
 </div>
 
@@ -83,28 +83,64 @@ git clone https://github.com/aitordsgn03/Asset-Pack-Preview-Generator.git
 
 ### Using the Godot Tool
 
-1. Open the Godot project located in the `godot-tool/` directory.
-2. Follow the instructions in the project README to render previews and generate the `.json` file.
-3. Export your project to distribute the tool or use it directly within Godot.
+1. **Open the Godot project**:
+   - Launch Godot 4.x.
+   - Open the `godot-tool/` directory.
+
+2. **Load 3D Models**:
+   - Drag and drop your `.glb`, `.obj`, or other supported formats into the tool. Place these models in the "models" folder.
+   - ![Screenshot of loading 3D models](path/to/screenshot.png)
+
+3. **Render Previews**:
+   - Adjust the camera or lighting if needed.
+   - By clicking in the `Main Controller` element you will be able to select the resolution, padding, and output directory of the images.
+   - ![Screenshot of rendering previews](path/to/screenshot.png)
+
+4. **Generate Metadata**:
+   - Click the `Metadata Generator`.
+   - Fill out details such as author, license, version, website, and description.
+   - ![Screenshot of generating metadata](path/to/screenshot.png)
+
+5. **Export**:
+   - Run the project by clicking the `Play` icon.
+   - Reveal the project documents and copy them to another folder.
+   - ![Screenshot of exporting project](path/to/screenshot.png)
 
 ---
 
 ### Generating the Webpage
 
-1. Navigate to the `astro-web/` directory.
-2. Install dependencies:
+1. **Navigate to the `astro-web/` directory**:
+   ```sh
+   cd astro-web/
+   ```
+
+2. **Install dependencies**:
    ```sh
    pnpm install
    ```
-3. Place the `.json` file and preview images from the Godot tool into the `src/data/` directory within the `astro-web/` directory.
-4. Run the development server:
+
+3. **Add Previews and Metadata**:
+   - Place `.png` preview images in `src/assets/images/`.
+   - Place the `.json` metadata file in `src/data/`.
+
+4. **Run the Development Server**:
    ```sh
    pnpm run dev
    ```
-5. Build the static site for deployment:
+
+   This command will start a local server for previewing your webpage.
+
+5. **Build the Static Site**:
+   Once you’re happy with your webpage:
    ```sh
    pnpm run build
    ```
+
+   The output will be in the `dist/` directory.
+
+6. **Deploy the Site**:
+   Upload the contents of the `dist/` folder to your hosting provider, such as GitHub Pages, Netlify, or Vercel.
 
 ---
 
@@ -138,6 +174,7 @@ Contributions are welcome! Whether it's fixing bugs, improving documentation, or
 Special Thanks to [Kenney](https://www.kenney.nl/) for his awesome work and for being the inspiration of this project.
 
 ---
+
 ## Tech Stack
 
 - **Godot 4**: For creating the 3D model preview and metadata generator.

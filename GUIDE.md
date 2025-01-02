@@ -152,6 +152,27 @@ The **Astro Webpage Generator** converts the previews and `.json` metadata into 
 - **Issue**: Images not displaying.
   - **Solution**: Check that images are placed in the correct directory (`src/assets/images/`) and have the correct file extensions.
 
+- **Issue**: You want to change the styles.
+  - **Solution**: You can change the colors of the 
+  ```css
+  :root {
+    /* Principal Colors */
+    --color-background: #171b21;
+    --color-surface: #1e242c;
+    --color-surface-alt: #2f333a;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #d7d9da;
+    --color-accent: #ffbe07;
+
+    /* Shadows */
+    --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.7);
+    --shadow-md: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  ```
+
+
+
 <p align="right"><a href="#top">Back to top 🔼</a></p>
 
 ---
