@@ -1,0 +1,26 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Asset_Renderer"
+config/description="A renderer for your asset packs that will make previews of each .glb or .gltf models. It will create a json that can be used for creating a \"Overview.html\" automatically with the following next github project:"
+config/version="0.1"
+config/tags=PackedStringArray("renderer")
+run/main_scene="res://Rendering.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+boot_splash/image="res://Splash Screen.png"
+config/icon="res://Icon.png"
+
+[filesystem]
+
+import/fbx2gltf/enabled.android=true
+import/fbx2gltf/enabled.web=true
+import/blender/enabled=false

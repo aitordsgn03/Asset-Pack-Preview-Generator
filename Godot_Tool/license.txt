@@ -1,0 +1,16 @@
+YourPackNameHere (0.1.0)
+	Created/distributed by AuthorNameHere (https://yourwebsite.com/)
+	Creation date: 31-12-2024 17:34
+
+			------------------------------
+	License: (Open Source)
+	https://opensource.org/licenses/MIT
+
+	Support by crediting 'AuthorNameHere' or 'https://yourwebsite.com/' (this is not a requirement)
+			------------------------------
+	• Website : https://yourwebsite.com/
+
+
+	• Twitter : https://x.com/reyortegaitor
+	• Itch.io : https://aitordsgn.itch.io/
+	• Website : https://yourwebsite.com/

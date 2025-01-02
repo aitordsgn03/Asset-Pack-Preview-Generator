@@ -1,0 +1,18 @@
+[gd_resource type="Environment" load_steps=2 format=3 uid="uid://dwp5l7pp2f4jf"]
+
+[sub_resource type="Sky" id="Sky_kmhto"]
+
+[resource]
+background_mode = 2
+background_color = Color(0.446777, 0.446777, 0.446777, 1)
+sky = SubResource("Sky_kmhto")
+ambient_light_source = 2
+ambient_light_color = Color(0.587892, 0.620808, 0.6287, 1)
+ambient_light_energy = 1.15
+tonemap_mode = 2
+ssao_enabled = true
+ssao_radius = 0.45
+ssao_intensity = 1.0
+ssao_power = 5.0
+glow_enabled = true
+glow_intensity = 2.0

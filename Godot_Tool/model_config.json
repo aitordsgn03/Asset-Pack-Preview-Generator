@@ -1,0 +1,218 @@
+{
+  "author": "AuthorNameHere",
+  "description": "A detailed description of your asset pack goes here.",
+  "generated_at": "2024-12-31T17:34:37",
+  "license": "Open Source",
+  "models": [
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "banner",
+      "path": "models/banner.glb",
+      "preview_image": "preview_images/banner.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "block",
+      "path": "models/block.glb",
+      "preview_image": "preview_images/block.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "border-corner",
+      "path": "models/border-corner.glb",
+      "preview_image": "preview_images/border-corner.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "border-straight",
+      "path": "models/border-straight.glb",
+      "preview_image": "preview_images/border-straight.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "bricks",
+      "path": "models/bricks.glb",
+      "preview_image": "preview_images/bricks.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 25,
+      "has_animations": true,
+      "mesh_count": 2,
+      "name": "character-soldier",
+      "path": "models/character-soldier.glb",
+      "preview_image": "preview_images/character-soldier.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "column-damaged",
+      "path": "models/column-damaged.glb",
+      "preview_image": "preview_images/column-damaged.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "column",
+      "path": "models/column.glb",
+      "preview_image": "preview_images/column.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "floor-detail",
+      "path": "models/floor-detail.glb",
+      "preview_image": "preview_images/floor-detail.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "floor",
+      "path": "models/floor.glb",
+      "preview_image": "preview_images/floor.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "stairs-corner-inner",
+      "path": "models/stairs-corner-inner.glb",
+      "preview_image": "preview_images/stairs-corner-inner.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "stairs-corner",
+      "path": "models/stairs-corner.glb",
+      "preview_image": "preview_images/stairs-corner.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "stairs",
+      "path": "models/stairs.glb",
+      "preview_image": "preview_images/stairs.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "statue",
+      "path": "models/statue.glb",
+      "preview_image": "preview_images/statue.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "tree",
+      "path": "models/tree.glb",
+      "preview_image": "preview_images/tree.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "trophy",
+      "path": "models/trophy.glb",
+      "preview_image": "preview_images/trophy.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "wall-corner",
+      "path": "models/wall-corner.glb",
+      "preview_image": "preview_images/wall-corner.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 2,
+      "name": "wall-gate",
+      "path": "models/wall-gate.glb",
+      "preview_image": "preview_images/wall-gate.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "wall",
+      "path": "models/wall.glb",
+      "preview_image": "preview_images/wall.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 2,
+      "name": "weapon-rack",
+      "path": "models/weapon-rack.glb",
+      "preview_image": "preview_images/weapon-rack.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "weapon-spear",
+      "path": "models/weapon-spear.glb",
+      "preview_image": "preview_images/weapon-spear.png",
+      "vertex_count": 0
+    },
+    {
+      "animation_count": 0,
+      "has_animations": false,
+      "mesh_count": 1,
+      "name": "weapon-sword",
+      "path": "models/weapon-sword.glb",
+      "preview_image": "preview_images/weapon-sword.png",
+      "vertex_count": 0
+    }
+  ],
+  "pack_name": "YourPackNameHere",
+  "pack_preview_image": "preview_image.png",
+  "stats": {
+    "total_animations": 25,
+    "total_models": 22
+  },
+  "textures": [
+    {
+      "name": "colormap",
+      "path": "textures/colormap.png"
+    }
+  ]
+}

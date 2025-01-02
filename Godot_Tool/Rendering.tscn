@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://biwh8abghhqi3"]
+
+[ext_resource type="Script" path="res://model-configuration-generator.gd" id="1_rexl8"]
+[ext_resource type="Script" path="res://rendering.gd" id="1_yowvi"]
+[ext_resource type="Environment" uid="uid://dwp5l7pp2f4jf" path="res://scenes/main_environment.tres" id="3_pk8di"]
+
+[node name="Main Controller" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000245571, 0, 9.77516e-05)
+script = ExtResource("1_yowvi")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+msaa_3d = 3
+use_debanding = true
+use_occlusion_culling = true
+canvas_item_default_texture_filter = 2
+positional_shadow_atlas_quad_0 = 6
+positional_shadow_atlas_quad_1 = 6
+positional_shadow_atlas_quad_2 = 6
+positional_shadow_atlas_quad_3 = 6
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+size = 7.0
+
+[node name="ModelRoot" type="Node3D" parent="SubViewport"]
+
+[node name="MetadataGenerator" type="Node" parent="SubViewport"]
+script = ExtResource("1_rexl8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.882948, 0.469472, 0, -0.469472, 0.882948, 0, 1.155, 2.19)
+shadow_enabled = true
+shadow_opacity = 0.75
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_pk8di")

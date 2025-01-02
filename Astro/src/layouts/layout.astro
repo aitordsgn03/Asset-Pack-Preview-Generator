@@ -1,0 +1,188 @@
+---
+import Footer from "@/components/Footer.astro";
+import Head from "@/components/Head.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  author: string;
+}
+const { title, description, author } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <Head title={title} description={description} author={author} />
+  <body class="bg-white min-h-screen">
+    <main>
+      <slot />
+    </main>
+  </body><Footer />
+</html>
+<style is:global>
+  :root {
+    /* Principal Colors */
+    --color-background: #171b21;
+    --color-surface: #1e242c;
+    --color-surface-alt: #2f333a;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #d7d9da;
+    --color-accent: #ffbe07;
+
+    /* Shadows */
+    --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.7);
+    --shadow-md: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  body {
+    font-family: system-ui, sans-serif;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    background-color: var(--color-background);
+    margin: 2em 0;
+    overflow-y: scroll;
+    transition:
+      background-color 0.5s ease,
+      color 0.5s ease;
+    width: 90vw;
+    margin: 0 auto;
+  }
+
+  h1 {
+    color: var(--color-text-primary);
+    font-size: 2.5em;
+    margin: 1em auto;
+    padding-top: 0.5em;
+    width: 100vw;
+    text-align: center;
+  }
+
+  p {
+    line-height: 1.6;
+    font-size: 1em;
+  }
+
+  a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+
+  a:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0.5em;
+    border-radius: 0.5em;
+  }
+
+  .container.header {
+    text-align: center;
+  }
+
+  .container.footer {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+
+  .package {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25vw;
+    max-width: 120px;
+    margin: 0.5em;
+    text-align: center;
+    font-size: 12px;
+    color: #d7d9da;
+    text-decoration: none;
+  }
+
+  .package img {
+    background-color: var(--color-surface-alt);
+    padding: 8px 18px;
+    border-radius: 4px;
+    width: 64px;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .package img:hover {
+    transform: scale(1.1);
+    background-color: #ececec;
+  }
+
+  .package .animated {
+    position: absolute;
+    top: 10vw;
+    left: 1.5em;
+    transform: translateY(-50vh);
+    color: var(--color-background);
+    background-color: var(--color-accent);
+    padding: 1px 5px;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .model-info {
+    position: absolute;
+    bottom: -20px;
+    left: 50vw;
+    transform: translateX(-50vw);
+    display: flex;
+    gap: 0.5em;
+    font-size: 10px;
+  }
+
+  .model-info span {
+    background-color: var(--color-surface-alt);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .data {
+    color: var(--color-background);
+    background-color: var(--color-text-secondary);
+    padding: 0.3em 0.7em;
+    border-radius: 0.2em;
+    font-size: 90vw;
+    margin-right: 0.5em;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .data:hover {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+  }
+
+  .swatch {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: text-top;
+    border-radius: 0.2em;
+    margin-right: 8px;
+    box-shadow: var(--shadow-sm);
+    background-size: cover;
+  }
+  .footer {
+    margin-top: 1em;
+    text-align: center;
+  }
+</style>

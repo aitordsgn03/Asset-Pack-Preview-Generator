@@ -1,0 +1,19 @@
+{
+  "name": "assetpacks",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint \"src/**/*.{js,ts,astro}\"",
+    "lint:fix": "eslint \"src/**/*.{js,ts,astro}\" --fix"
+  },
+  "dependencies": {
+    "astro": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2"
+  }
+}

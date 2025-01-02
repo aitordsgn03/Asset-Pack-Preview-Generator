@@ -5,6 +5,8 @@
 .import/
 export.cfg
 export_presets.cfg
+.import
+.png.import
 
 # Imported translations (automatically generated from CSV files)
 *.translation
@@ -13,3 +15,19 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Astro-specific ignores
+node_modules/
+dist/
+*.cache/
+*.log
+.env
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.tmp
+.nyc_output/
+coverage/
+
