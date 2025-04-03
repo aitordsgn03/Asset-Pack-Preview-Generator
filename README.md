@@ -4,6 +4,8 @@
 
 <div align="center">
 
+This project was created inspired by the amazing work of [@Kenney](https://kenney.nl/). The source code  of the pages and the style of them are his [work](https://github.com/KenneyNL?tab=repositories). I didn't want to take credits of work that wasn't mine. If you want to support amazing free asset development go [check his work](https://kenney.nl/assets) or [donate him](https://kenney.nl/donate). 
+
 The **3D Asset Pack Preview Generator** is inspired by the workflow of creating well-organized and visually appealing asset packs for game development and 3D design. The goal is to make it easier for creators to present their work efficiently, with minimal manual effort.
 
 [📖 Guide](https://github.com/aitordsgn03/Asset-Pack-Preview-Generator/blob/main/GUIDE.md) · [🐛 Report an Issue](https://github.com/aitordsgn03/Asset-Pack-Preview-Generator/issues) · [💡 Suggest an Idea](https://github.com/aitordsgn03/Asset-Pack-Preview-Generator/issues)
