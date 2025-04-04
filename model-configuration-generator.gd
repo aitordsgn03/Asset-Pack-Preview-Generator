@@ -177,7 +177,8 @@ func scan_directory_textures(path: String, textures_data: Array):
 			var full_path = path + file_name
 			
 			if dir.current_is_dir() and file_name != "." and file_name != "..":
-				scan_directory(full_path + "/", textures_data)
+				# Llamar recursivamente a scan_directory_textures, no a scan_directory
+				scan_directory_textures(full_path + "/", textures_data)
 			elif file_name.get_extension().to_lower() in ["png","jpg","jpeg"]:
 				var model_name = file_name.get_basename()
 				
@@ -190,6 +191,8 @@ func scan_directory_textures(path: String, textures_data: Array):
 		
 		dir.list_dir_end()
 	print("Generated Textures Data")
+	
+	
 #License generation
 func generate_license_file():
 	var date_obj = Time.get_datetime_dict_from_system()
@@ -237,57 +240,79 @@ func generate_license_file():
 	else:
 		push_error("Failed to create license.txt")
 
+# También necesitamos actualizar el CSS para que las texturas se muestren correctamente
 func generate_html_file():
 	print("Generating HTML file...")
+		# Obtener primero los contenidos HTML de texturas y modelos
+	var textures_html_content = get_textures_html()
+	var models_html_content = get_models_html()
 	var html_content = """
 		<!doctype html>
-		<html lang="en">
-		<head>
-			<meta charset="utf-8">
-			<title>%s</title>
-			<meta name="description" content="Game assets overview">
-			<meta name="author" content="%s">
-			<style>
-			  :root {
-				/* Principal Colors */
-				--color-background: #171b21;
-				--color-surface: #1e242c;
-				--color-surface-alt: #2f333a;
-				--color-text-primary: #ffffff;
-				--color-text-secondary: #d7d9da;
-				--color-accent: #ffbe07;
+			<html lang="en">
+			  <head>
+				<meta charset="utf-8" />
+				<title>{pack_name}</title>
+				<meta name="description" content="Game assets overview" />
+				<meta name="author" content="{author}" />
+				<style>
+				/* Custom Properties */
+				:root {
+				/* Colores principales */
+				--color-background: #f0fdf9;
+				--color-surface: #ffffff;
+				--color-surface-alt: #f1f9f7;
+				--color-text-primary: #064e3b;
+				--color-text-secondary: #047857;
+				--color-accent: #059669;
+				--color-accent-light: #d1fae5;
 
-				/* Shadows */
-				--shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.7);
-				--shadow-md: 0px 2px 4px rgba(0, 0, 0, 0.1);
-				--shadow-lg: 0px 4px 6px rgba(0, 0, 0, 0.1);
+				/* Sombras */
+				--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+				--shadow-md:
+					0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+				--shadow-lg:
+					0 10px 15px -3px rgba(0, 0, 0, 0.1),
+					0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+				/* Otros */
+				--border-radius: 0.75rem;
 				}
+
+				/* Base Styles */
 				body {
-				font-family: system-ui, sans-serif;
+				font-family:
+					system-ui,
+					-apple-system,
+					BlinkMacSystemFont,
+					"Segoe UI",
+					Roboto,
+					sans-serif;
 				font-size: 0.9em;
 				font-weight: 600;
 				color: var(--color-text-secondary);
 				background-color: var(--color-background);
-				margin: 2em 0;
+				margin: 0 auto;
 				overflow-y: scroll;
 				transition:
 					background-color 0.5s ease,
 					color 0.5s ease;
-				width: 90vw;
-				margin: 0 auto;
+				width: 90%;
 				}
 
 				h1 {
 				color: var(--color-text-primary);
-				font-size: 2.5em;
-				margin: 1em auto;
-				padding-top: 0.5em;
+				font-size: 3rem;
+				font-weight: 800;
+				margin-bottom: 1.5rem;
+				line-height: 1.1;
 				text-align: center;
 				}
 
-				p {
-				line-height: 1.6;
-				font-size: 1em;
+				h2 {
+				font-size: 1.5rem;
+				font-weight: 700;
+				margin: 0;
+				color: var(--color-text-primary);
 				}
 
 				a {
@@ -305,11 +330,11 @@ func generate_html_file():
 				border-color: var(--color-accent);
 				}
 
+				/* Container Styles */
 				.container {
-				max-width: 1120px;
+				max-width: 1200px;
 				margin: 0 auto;
-				padding: 0.5em;
-				border-radius: 0.5em;
+				padding: 0 1rem;
 				}
 
 				.container.header {
@@ -317,18 +342,188 @@ func generate_html_file():
 				}
 
 				.container.footer {
-				margin-top: 1em;
-				margin-bottom: 1em;
+				margin: 1em auto;
 				text-align: center;
 				}
 
+				/* Hero Section */
+				.hero {
+				position: relative;
+				padding: 5rem 1rem;
+				text-align: center;
+				overflow: hidden;
+				}
+
+				.hero-content {
+				position: relative;
+				z-index: 1;
+				max-width: 800px;
+				margin: 0 auto;
+				}
+
+				.hero-description {
+				color: var(--color-text-secondary);
+				font-size: 1.25rem;
+				max-width: 600px;
+				margin: 0 auto;
+				line-height: 1.6;
+				}
+
+				/* Badge Styles */
+				.badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				background-color: var(--color-accent-light);
+				color: var(--color-accent);
+				font-weight: 600;
+				font-size: 0.875rem;
+				padding: 0.5rem 1rem;
+				border-radius: 9999px;
+				}
+
+				.badge-icon,
+				.button-icon {
+				width: 1rem;
+				height: 1rem;
+				}
+
+				.animated-badge {
+				position: absolute;
+				top: 0.5rem;
+				right: 0.5rem;
+				background-color: var(--color-accent);
+				color: white;
+				font-size: 0.625rem;
+				font-weight: 700;
+				padding: 0.25rem 0.5rem;
+				border-radius: 0.25rem;
+				z-index: 1;
+				}
+
+				/* Section Styles */
+				section {
+				background-color: var(--color-surface);
+				border-radius: var(--border-radius);
+				padding: 2rem;
+				margin-bottom: 2rem;
+				box-shadow: var(--shadow-md);
+				border: 1px solid rgba(10, 150, 105, 0.1);
+				}
+
+				.section-header {
+				display: flex;
+				align-items: center;
+				margin-bottom: 1.5rem;
+				color: var(--color-text-primary);
+				}
+
+				.section-icon {
+				margin-right: 0.75rem;
+				color: var(--color-accent);
+				}
+
+				.info-text {
+				color: var(--color-text-secondary);
+				margin-bottom: 1.5rem;
+				line-height: 1.6;
+				}
+
+				/* Stats Styles */
+				.stats-container {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1rem;
+				}
+
+				.stat-badge,
+				.stat {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				background-color: var(--color-surface-alt);
+				color: var(--color-text-secondary);
+				border-radius: 0.5rem;
+				font-size: 0.875rem;
+				}
+
+				.stat-badge {
+				padding: 0.625rem 1rem;
+				}
+
+				.stat {
+				gap: 0.375rem;
+				padding: 0.375rem 0.75rem;
+				border-radius: 0.375rem;
+				font-weight: 500;
+				}
+
+				.stat-icon {
+				color: var(--color-accent);
+				}
+
+				/* Texture Styles */
+				.textures-container {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1rem;
+				}
+
+				.texture-card {
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+				background-color: var(--color-surface-alt);
+				padding: 0.625rem 1rem;
+				border-radius: 0.5rem;
+				text-decoration: none;
+				color: var(--color-text-secondary);
+				transition: all 0.2s ease;
+				border: 1px solid transparent;
+				}
+
+				.texture-card:hover {
+				background-color: var(--color-surface);
+				border-color: var(--color-accent);
+				transform: translateY(-2px);
+				box-shadow: var(--shadow-sm);
+				}
+
+				.texture-swatch,
+				.swatch {
+				border-radius: 0.25rem;
+				background-size: cover;
+				background-position: center;
+				}
+
+				.texture-swatch {
+				width: 1.5rem;
+				height: 1.5rem;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				}
+
+				.swatch {
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				vertical-align: text-top;
+				margin-right: 8px;
+				box-shadow: var(--shadow-sm);
+				}
+
+				.texture-name {
+				font-weight: 500;
+				font-size: 0.875rem;
+				}
+
+				/* Package Styles */
 				.package {
 				position: relative;
 				display: inline-flex;
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
-				width: 25vw;
+				width: 25%;
 				max-width: 120px;
 				margin: 0.5em;
 				text-align: center;
@@ -353,9 +548,9 @@ func generate_html_file():
 
 				.package .animated {
 				position: absolute;
-				top: 10vw;
+				top: 10%;
 				left: 1.5em;
-				transform: translateY(-50vh);
+				transform: translateY(-50%);
 				color: var(--color-background);
 				background-color: var(--color-accent);
 				padding: 1px 5px;
@@ -369,8 +564,8 @@ func generate_html_file():
 				.model-info {
 				position: absolute;
 				bottom: -20px;
-				left: 50vw;
-				transform: translateX(-50vw);
+				left: 50%;
+				transform: translateX(-50%);
 				display: flex;
 				gap: 0.5em;
 				font-size: 10px;
@@ -382,12 +577,156 @@ func generate_html_file():
 				border-radius: 3px;
 				}
 
+				/* Models Grid Styles */
+				.models-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+				gap: 1.5rem;
+				}
+
+				.model-card,
+				.pack-card {
+				background-color: var(--color-surface);
+				border-radius: var(--border-radius);
+				overflow: hidden;
+				box-shadow: var(--shadow-sm);
+				transition: all 0.3s ease;
+				border: 1px solid rgba(10, 150, 105, 0.1);
+				position: relative;
+				}
+
+				.model-card:hover,
+				.pack-card:hover {
+				transform: translateY(-5px);
+				box-shadow: var(--shadow-md);
+				border-color: rgba(10, 150, 105, 0.3);
+				}
+
+				.model-image-container {
+				position: relative;
+				background-color: var(--color-surface-alt);
+				padding: 1rem;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				aspect-ratio: 1;
+				}
+
+				.model-image,
+				.pack-image {
+				max-width: 100%;
+				max-height: 100%;
+				object-fit: contain;
+				transition: transform 0.3s ease;
+				}
+
+				.model-card:hover .model-image,
+				.pack-card:hover .pack-image {
+				transform: scale(1.1);
+				}
+
+				.model-content,
+				.pack-content {
+				padding: 1rem;
+				}
+
+				.model-name {
+				font-size: 0.875rem;
+				font-weight: 600;
+				margin: 0 0 0.5rem 0;
+				color: var(--color-text-primary);
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				}
+
+				.model-stats,
+				.pack-stats {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5rem;
+				}
+
+				.model-stat {
+				font-size: 0.75rem;
+				color: var(--color-text-secondary);
+				background-color: var(--color-surface-alt);
+				padding: 0.25rem 0.5rem;
+				border-radius: 0.25rem;
+				white-space: nowrap;
+				}
+
+				/* Packs Styles */
+				.packs-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+				gap: 2rem;
+				padding: 1rem 0 4rem;
+				}
+
+				.pack-card {
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				}
+
+				.pack-image-container {
+				position: relative;
+				width: 100%;
+				height: 200px;
+				background-color: var(--color-surface-alt);
+				overflow: hidden;
+				}
+
+				.pack-image {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.5s ease;
+				}
+
+				.pack-content {
+				padding: 1.5rem;
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				}
+
+				.pack-title {
+				color: var(--color-text-primary);
+				font-size: 1.25rem;
+				font-weight: 700;
+				margin: 0 0 0.75rem 0;
+				line-height: 1.3;
+				}
+
+				.pack-description {
+				color: var(--color-text-secondary);
+				font-size: 0.95rem;
+				margin-bottom: 1.5rem;
+				line-height: 1.5;
+				/* Add ellipsis for long descriptions */
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				flex-grow: 1;
+				}
+
+				.pack-link {
+				display: block;
+				text-decoration: none;
+				color: inherit;
+				height: 100%;
+				}
+
+				/* Button Styles */
 				.data {
 				color: var(--color-background);
 				background-color: var(--color-text-secondary);
 				padding: 0.3em 0.7em;
 				border-radius: 0.2em;
-				font-size: 1em;
+				font-size: 90%;
 				margin-right: 0.5em;
 				text-decoration: none;
 				transition: background-color 0.2s ease-in-out;
@@ -398,53 +737,336 @@ func generate_html_file():
 				color: var(--color-background);
 				}
 
-				.swatch {
-				display: inline-block;
-				width: 16px;
-				height: 16px;
-				vertical-align: text-top;
-				border-radius: 0.2em;
-				margin-right: 8px;
-				box-shadow: var(--shadow-sm);
-				background-size: cover;
+				.view-button {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+				background-color: var(--color-accent);
+				color: white;
+				padding: 0.625rem 1rem;
+				border-radius: 0.375rem;
+				font-weight: 600;
+				font-size: 0.875rem;
+				transition: background-color 0.2s ease;
 				}
-				.footer {
-				margin-top: 1em;
-				text-align: center;
+
+				.pack-card:hover .view-button {
+				background-color: #047857;
 				}
-			</style>
-		</head>
-		<body>
-			<div class='container header'><h1>%s</h1></div>
-			<div class='container content'>
-				<p><strong>Information</strong></p>
-				<p>Hover over models to show details. Find more details on the <a target='_blank' href='%s'>official website</a>.</p>
-				<p>
-					<span class='data'><strong>Total models:</strong> %d×</span>
-					<span class='data'><strong>Total animations:</strong> %d×</span>
-				</p>
-			</div>
-			<div class='container content'>
-				<p><strong>Textures</strong></p>
-				%s
-			</div>
-			<div class='container content'>
-				<p style='margin-bottom:2em'><strong>Models</strong></p>
-				%s
-			</div>
-			<div class='clear'></div>
-			<div class='container footer'>
-				Find more assets at <a href='%s'>%s</a><br>
-				License: <a href='%s'>%s</a>
-			</div>
-		</body>
-		</html>
-	""" % [
-		pack_name, author, pack_name, website,
-		total_models, total_animations,
-		get_textures_html(), get_models_html(),
-		website, website, license_url, license
-	]
+
+				/* Responsive Styles */
+				@media (max-width: 768px) {
+				h1 {
+					font-size: 2.25rem;
+				}
+
+				.hero {
+					padding: 3rem 1rem;
+				}
+
+				section {
+					padding: 1.5rem;
+				}
+
+				.models-grid {
+					grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+					gap: 1rem;
+				}
+
+				.packs-grid {
+					grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+					gap: 1.5rem;
+				}
+
+				.package {
+					width: 45%;
+				}
+				}
+
+				@media (max-width: 480px) {
+				h1 {
+					font-size: 1.875rem;
+				}
+
+				.hero-description {
+					font-size: 1rem;
+				}
+
+				.models-grid {
+					grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+				}
+
+				.model-content {
+					padding: 0.75rem;
+				}
+
+				.model-name {
+					font-size: 0.75rem;
+				}
+
+				.model-stat {
+					font-size: 0.625rem;
+				}
+
+				.packs-grid {
+					grid-template-columns: 1fr;
+				}
+
+				.package {
+					width: 90%;
+				}
+				}
+				</style>
+			  </head>
+			  <body>
+				<div class="page-wrapper" >
+				  <header class="hero" >
+					<div class="hero-content" >
+					  <div class="badge" >
+						<svg
+						  xmlns="http://www.w3.org/2000/svg"
+						  width="24"
+						  height="24"
+						  fill="none"
+						  stroke="currentColor"
+						  stroke-linecap="round"
+						  stroke-linejoin="round"
+						  stroke-width="2"
+						  class="icon icon-tabler icons-tabler-outline icon-tabler-package"
+						  
+						>
+						  <path
+							stroke="none"
+							d="M0 0h24v24H0z"
+							
+						  ></path>
+						  <path
+							d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3M12 12l8-4.5M12 12v9M12 12 4 7.5M16 5.25l-8 4.5"
+							
+						  ></path>
+						</svg>
+						3D Asset Pack
+					  </div>
+					<h1 >{pack_name}</h1>
+					<p class="hero-description" >{description}</p>
+					</div>
+				  </header>
+				  <section class="info-section" >
+					<div class="section-header" >
+					  <svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="section-icon"
+						
+					  >
+						<path
+						  stroke="none"
+						  d="M0 0h24v24H0z"
+						  fill="none"
+						  
+						></path>
+						<path
+						  d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"
+						  
+						></path>
+						<path d="M12 9h.01" ></path>
+						<path d="M11 12h1v4h1" ></path>
+					  </svg>
+					  <h2 >Information</h2>
+					</div>
+					<p class="info-text" >
+					  If you need help importing the models to your game engine you can
+					  contact me if you need.
+					</p>
+					<div class="stats-container" >
+					  <div class="stat-badge" >
+						<svg
+						  xmlns="http://www.w3.org/2000/svg"
+						  width="24"
+						  height="24"
+						  fill="none"
+						  stroke="currentColor"
+						  stroke-linecap="round"
+						  stroke-linejoin="round"
+						  stroke-width="2"
+						  class="stat-icon"
+						  
+						>
+						  <path
+							stroke="none"
+							d="M0 0h24v24H0z"
+							
+						  ></path>
+						  <path d="M14 3v4a1 1 0 0 0 1 1h4" ></path>
+						  <path
+							d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2zM12 13.5l4-1.5"
+							
+						  ></path>
+						  <path
+							d="m8 11.846 4 1.654V18l4-1.846v-4.308L12 10zM8 12v4.2l4 1.8"
+							
+						  ></path>
+						</svg>
+			<strong >Total objects:</strong> {total_models}×
+					  </div>
+					  <div class="stat-badge" >
+						<svg
+						  xmlns="http://www.w3.org/2000/svg"
+						  width="24"
+						  height="24"
+						  fill="none"
+						  stroke="currentColor"
+						  stroke-linecap="round"
+						  stroke-linejoin="round"
+						  stroke-width="2"
+						  class="stat-icon"
+						  
+						>
+						  <path
+							stroke="none"
+							d="M0 0h24v24H0z"
+							
+						  ></path>
+						  <path d="M7 4v16l13-8z" ></path>
+						</svg>
+			<strong >Total animations:</strong> {total_animations}×
+					  </div>
+					  <a
+						class="stat-badge"
+						href="license.txt"
+						target="_blank"
+						
+					  >
+						<svg
+						  xmlns="http://www.w3.org/2000/svg"
+						  width="24"
+						  height="24"
+						  fill="none"
+						  stroke="currentColor"
+						  stroke-linecap="round"
+						  stroke-linejoin="round"
+						  stroke-width="2"
+						  class="stat-icon"
+						  
+						>
+						  <path
+							stroke="none"
+							d="M0 0h24v24H0z"
+							
+						  ></path>
+						  <path
+							d="M15 21H6a3 3 0 0 1-3-3v-1h10v2a2 2 0 0 0 4 0V5a2 2 0 1 1 2 2h-2m2-4H8a3 3 0 0 0-3 3v11M9 7h4M9 11h4"
+							
+						  ></path>
+						</svg>
+						License
+					  </a>
+					</div>
+				  </section>
+
+				  <section class="textures-section" >
+					<div class="section-header" >
+					  <svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						fill="none"
+						stroke="currentColor"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						class="section-icon"
+						
+					  >
+						<path
+						  stroke="none"
+						  d="M0 0h24v24H0z"
+						  
+						></path>
+						<path
+						  d="M15 8h.01M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6z"
+						  
+						></path>
+						<path
+						  d="m3 16 5-5c.928-.893 2.072-.893 3 0l5 5"
+						  
+						></path>
+						<path
+						  d="m14 14 1-1c.928-.893 2.072-.893 3 0l3 3"
+						  
+						></path>
+					  </svg>
+					  <h2 >Textures</h2>
+					</div>
+					{textures_html}
+				  </section>
+
+				  <section class="models-section" >
+					<div class="section-header" >
+					  <svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="section-icon"
+						
+					  >
+						<path
+						  d="M12.89 1.45l8 4A2 2 0 0 1 22 7.24v9.53a2 2 0 0 1-1.11 1.79l-8 4a2 2 0 0 1-1.79 0l-8-4a2 2 0 0 1-1.1-1.8V7.24a2 2 0 0 1 1.11-1.79l8-4a2 2 0 0 1 1.78 0z"
+						  
+						></path>
+						<polyline
+						  points="2.32 6.16 12 11 21.68 6.16"
+						  
+						></polyline>
+						<line
+						  x1="12"
+						  x2="12"
+						  y1="22"
+						  y2="11"
+						  
+						></line>
+					  </svg>
+					  <h2 >Models</h2>
+					</div>
+					<div class="models-grid" data-astro-cid-vhql3bsp>
+					{models_html}
+					</div>
+				  </section>
+				  <div class="clear"></div>
+				  <div class="container footer">
+				Find more assets at <a href="{website}">{website}</a><br />
+				License: <a href="{license_url}">{license}</a>
+				  </div>
+				</div>
+			  </body>
+			</html>
+
+		""" .format({
+		"pack_name": pack_name,
+		"author": author,
+		"description": description,
+		"total_models": total_models,
+		"total_animations": total_animations,
+		"textures_html": textures_html_content,
+		"models_html": models_html_content,
+		"website": website,
+		"license_url": license_url,
+		"license": license
+	})
 
 	print("HTML content generated successfully.")
 
@@ -454,20 +1076,62 @@ func generate_html_file():
 		print("Generated overview.html file")
 	else:
 		push_error("Failed to create overview.html")
-
+		
+		
 func get_textures_html() -> String:
-	var textures_html = ""
-	for texture in textures_data:
-		textures_html += "<p><a href='%s' target='_blank' class='data no-padding'><span class='swatch' style='background-image: url(\"%s\")'></span>%s</a></p>\n" % [
-			texture.path, texture.path, texture.name
-		]
+	var textures_html = "<div class='textures-container' >\n"
+	
+	if textures_data.size() == 0:
+		textures_html += "<p>No textures found</p>\n"
+	else:
+		for texture in textures_data:
+			textures_html += """
+			<a
+				href="{path}"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="texture-card"
+			  >
+				<div
+				  class="texture-swatch"
+				  style="background-image: url({path});"				>
+				</div>
+				<span class="texture-name" 
+				  >{name}</span
+				> </a>
+			""".format({
+				"path": texture.path, 
+				"name": texture.name
+				})
+	
+	textures_html += "</div>\n"
 	return textures_html
 
 func get_models_html() -> String:
 	var models_html = ""
-	for model in models_data:
-		models_html += "<div title='%d vertices • %d animation(s)' class='package'><img src='%s'/><br>%s</div>\n" % [
-			model.vertex_count, model.animation_count,
-			model.preview_image, model.name
-		]
+	
+	if models_data.size() == 0:
+		models_html += "<p>No models found</p>\n"
+	else:
+		for model in models_data:
+			models_html += """
+			<div class="model-card" title="{vertex_count} vertex • {mesh_count} group • {animation_count} Animations">
+				<div class="model-image-container" >
+					<img src="{preview_image}" alt="{name}" loading="lazy" class="model-image" />
+				</div>
+				<div class="model-content" >
+					<h3 class="model-name" >{name}</h3>
+					<div class="model-stats">
+					<span class="model-stat">{vertex_count} vertex
+					</span>
+					</div>
+				</div>
+			</div>
+			""".format({
+				"name": model.name,
+				"preview_image": model.preview_image,
+				"vertex_count": model.vertex_count,
+				"mesh_count": model.mesh_count,
+				"animation_count": model.animation_count
+			  })
 	return models_html
